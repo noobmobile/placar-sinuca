@@ -16,14 +16,13 @@ function PlayerBall({ ball }) {
 }
 
 function Player({ player }) {
-  const { selectedBall, setSelectedBall } = useSinuca();
+  const { selectedBall, setSelectedBall, addBallToPlayer } = useSinuca();
   const isSelecting = !!selectedBall;
 
   function onPress() {
     if (!isSelecting) return;
     setSelectedBall(null);
-    player.balls = player.balls || [];
-    player.balls.push(selectedBall);
+    addBallToPlayer(player, selectedBall);
   }
 
   return (

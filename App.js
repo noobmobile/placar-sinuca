@@ -3,6 +3,7 @@ import { ImageBackground, StyleSheet, Text, View } from "react-native";
 import Balls from "./src/Balls";
 import Players from "./src/Players";
 import { SinucaProvider } from "./src/SinucaContext";
+import FloatButton from "./src/FloatButton";
 
 export default function App() {
   return (
@@ -15,6 +16,7 @@ export default function App() {
         <Players />
         <Balls />
       </ImageBackground>
+      <FloatButton />
     </SinucaProvider>
   );
 }
