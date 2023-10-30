@@ -3,9 +3,11 @@ import React from "react";
 import { FloatingAction } from "react-native-floating-action";
 import { useSinuca } from "../context/SinucaContext";
 import { navigate } from "../utils";
+import { useCountdown } from "../context/CountdownContext";
 
 const FloatButton = () => {
   const { undo, resetScore } = useSinuca();
+  const { stop } = useCountdown();
 
   const actions = [
     {
@@ -13,7 +15,10 @@ const FloatButton = () => {
       icon: require("../../assets/icons/cancel-button.png"),
       name: "reset",
       position: 2,
-      callback: resetScore,
+      callback: () => {
+        stop();
+        resetScore();
+      },
     },
     {
       text: "Restaurar ultima bola",

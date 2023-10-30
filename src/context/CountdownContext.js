@@ -21,6 +21,10 @@ export function CountdownProvider({ children }) {
     return () => clearInterval(interval);
   }, [countdownRunning, countdownTimeLeft]);
 
+  useEffect(() => {
+    setCountdownTimeLeft(countdownDuration * 60);
+  }, [countdownDuration]);
+
   function stop() {
     setCountdownRunning(false);
     setCountdownTimeLeft(countdownDuration * 60);
@@ -33,9 +37,12 @@ export function CountdownProvider({ children }) {
   return (
     <CountdownContext.Provider
       value={{
+        stop,
         toggle,
         countdownRunning,
         countdownTimeLeft,
+        countdownDuration,
+        setCountdownDuration,
       }}
     >
       {children}

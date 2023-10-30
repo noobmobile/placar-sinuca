@@ -3,10 +3,12 @@ import React, { useState } from "react";
 import { Button, TextInput } from "react-native-paper";
 import { useSinuca } from "../context/SinucaContext";
 import { navigate } from "../utils";
+import { useCountdown } from "../context/CountdownContext";
 
 const Settings = () => {
   const { players, setPlayers } = useSinuca();
   const [playerAmount, setPlayerAmount] = useState(players.length);
+  const { countdownDuration, setCountdownDuration } = useCountdown();
 
   function onChangePlayerAmount(text) {
     let value = parseInt(text);
@@ -34,8 +36,25 @@ const Settings = () => {
     setPlayers([...players]);
   }
 
+  function changeCountdownDuration(text) {
+    let value = parseInt(text);
+    if (!value || value < 1) {
+      setCountdownDuration("");
+      return;
+    }
+    if (value > 60) value = 60;
+    setCountdownDuration(value);
+  }
+
   return (
     <View style={styles.container}>
+      <TextInput
+        mode="outlined"
+        keyboardType="numeric"
+        label="Tempo do cronômetro"
+        value={countdownDuration?.toString()}
+        onChangeText={changeCountdownDuration}
+      />
       <TextInput
         mode="outlined"
         keyboardType="numeric"
