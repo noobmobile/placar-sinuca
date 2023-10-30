@@ -27,6 +27,7 @@ function Ball({ number }) {
         isSelected ? styles.selectedBall : undefined,
         isInsideAnyPlayer ? styles.insidePlayer : undefined,
       ]}
+      disabled={isInsideAnyPlayer}
       onPress={onPress}
     >
       <Animatable.Image
@@ -67,11 +68,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   ball: {
-    padding: 1,
+    padding: 2,
   },
   ballImage: {
-    width: 40,
-    height: 40,
+    width: 50,
+    height: 50,
   },
   selectedBall: {},
   insidePlayer: {

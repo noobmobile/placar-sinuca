@@ -5,13 +5,27 @@ import { useSinuca } from "../context/SinucaContext";
 import { navigate } from "../utils";
 
 const FloatButton = () => {
-  const { undo } = useSinuca();
+  const { undo, setPlayers } = useSinuca();
+
+  function cancel() {
+    setPlayers((players) =>
+      players.map((player) => ({ ...player, balls: [] }))
+    );
+  }
+
   const actions = [
+    {
+      text: "Cancelar partida",
+      icon: require("../../assets/icons/cancel-button.png"),
+      name: "reset",
+      position: 2,
+      callback: cancel,
+    },
     {
       text: "Restaurar ultima bola",
       icon: require("../../assets/icons/undo-button.png"),
       name: "undo",
-      position: 2,
+      position: 3,
       callback: undo,
     },
     {
