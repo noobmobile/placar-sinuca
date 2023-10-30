@@ -51,17 +51,21 @@ function Player({ player }) {
 export default function Players() {
   const { players } = useSinuca();
   return (
-    <View style={styles.container}>
-      {players.map((player, index) => (
-        <Player key={index} player={player} />
-      ))}
+    <View style={styles.mainContainer}>
+      <View style={styles.container}>
+        {players.map((player, index) => (
+          <Player key={index} player={player} />
+        ))}
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
+  mainContainer: {
     width: "85%",
+  },
+  container: {
     display: "flex",
     flexWrap: "wrap",
     flexDirection: "row",
