@@ -16,7 +16,19 @@ const Countdown = () => {
   const seconds = `${countdownTimeLeft % 60}`.padStart(2, "0");
 
   return (
-    <AnimatedTouchableOpacity style={styles.container} onPress={onPress}>
+    <AnimatedTouchableOpacity
+      animation={
+        countdownRunning
+          ? countdownTimeLeft < 10
+            ? "tada"
+            : "pulse"
+          : undefined
+      }
+      easing="ease-out"
+      iterationCount="infinite"
+      style={styles.container}
+      onPress={onPress}
+    >
       <Icon
         source={
           countdownRunning ? "pause-circle-outline" : "play-circle-outline"
@@ -24,12 +36,7 @@ const Countdown = () => {
         color="white"
         size={24}
       />
-      <Text
-        animation={countdownRunning ? "pulse" : undefined}
-        easing="ease-out"
-        iterationCount="infinite"
-        style={styles.text}
-      >
+      <Text style={styles.text}>
         {minutes}:{seconds}
       </Text>
     </AnimatedTouchableOpacity>
