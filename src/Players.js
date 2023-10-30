@@ -18,6 +18,7 @@ function PlayerBall({ ball }) {
 function Player({ player }) {
   const { selectedBall, setSelectedBall, addBallToPlayer } = useSinuca();
   const isSelecting = !!selectedBall;
+  const total = player.balls?.reduce((acc, ball) => acc + ball, 0) || 0;
 
   function onPress() {
     if (!isSelecting) return;
@@ -34,7 +35,9 @@ function Player({ player }) {
       iterationCount="infinite"
     >
       <View>
-        <Text style={styles.playerName}>{player.name}</Text>
+        <Text style={styles.playerName}>
+          {player.name} - {total}
+        </Text>
       </View>
       <View style={styles.ballContainer}>
         {player.balls?.map((ball, index) => (
