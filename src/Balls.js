@@ -1,30 +1,42 @@
-import { Image, StyleSheet, Text, View } from "react-native";
-import React from "react";
-
-// react native não suporta require dinâmico :/
-const assets = {
-  1: require("../assets/bolas/1.png"),
-  2: require("../assets/bolas/2.png"),
-  3: require("../assets/bolas/3.png"),
-  4: require("../assets/bolas/4.png"),
-  5: require("../assets/bolas/5.png"),
-  6: require("../assets/bolas/6.png"),
-  7: require("../assets/bolas/7.png"),
-  8: require("../assets/bolas/8.png"),
-  9: require("../assets/bolas/9.png"),
-  10: require("../assets/bolas/10.png"),
-  11: require("../assets/bolas/11.png"),
-  12: require("../assets/bolas/12.png"),
-  13: require("../assets/bolas/13.png"),
-  14: require("../assets/bolas/14.png"),
-  15: require("../assets/bolas/15.png"),
-};
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import React, { useContext } from "react";
+import { SinucaContext, useSinuca } from "./SinucaContext";
+import * as Animatable from "react-native-animatable";
+import { ballsAssets } from "./utils";
 
 function Ball({ number }) {
+  const { selectedBall, setSelectedBall, players } = useSinuca();
+  const isSelected = selectedBall === number;
+  const isInsideAnyPlayer = players.some((player) =>
+    player.balls?.includes(number)
+  );
+
+  function onPress() {
+    if (isInsideAnyPlayer) return;
+    if (isSelected) {
+      setSelectedBall(null);
+      return;
+    }
+    setSelectedBall(number);
+  }
+
   return (
-    <View style={styles.ball}>
-      <Image style={styles.ballImage} source={assets[number]} />
-    </View>
+    <TouchableOpacity
+      style={[
+        styles.ball,
+        isSelected ? styles.selectedBall : undefined,
+        isInsideAnyPlayer ? styles.insidePlayer : undefined,
+      ]}
+      onPress={onPress}
+    >
+      <Animatable.Image
+        animation={isSelected ? "rubberBand" : undefined}
+        easing="ease-out"
+        iterationCount="infinite"
+        style={styles.ballImage}
+        source={ballsAssets[number]}
+      />
+    </TouchableOpacity>
   );
 }
 
@@ -60,5 +72,9 @@ const styles = StyleSheet.create({
   ballImage: {
     width: 40,
     height: 40,
+  },
+  selectedBall: {},
+  insidePlayer: {
+    opacity: 0,
   },
 });

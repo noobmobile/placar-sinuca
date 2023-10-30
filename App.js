@@ -1,19 +1,21 @@
 import { StatusBar } from "expo-status-bar";
 import { ImageBackground, StyleSheet, Text, View } from "react-native";
 import Balls from "./src/Balls";
+import Players from "./src/Players";
+import { SinucaProvider } from "./src/SinucaContext";
 
 export default function App() {
   return (
-    <View style={styles.container}>
+    <SinucaProvider style={styles.container}>
       <ImageBackground
         source={require("./assets/background.jpg")}
         resizeMode="cover"
         style={styles.image}
       >
-        <View />
+        <Players />
         <Balls />
       </ImageBackground>
-    </View>
+    </SinucaProvider>
   );
 }
 
