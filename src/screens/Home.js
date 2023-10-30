@@ -9,12 +9,11 @@ export default function Home() {
     <View style={styles.container}>
       <ImageBackground
         source={require("../../assets/background.jpg")}
-        resizeMode="cover"
+        resizeMode="stretch"
         style={styles.image}
       >
         <Players />
         <Balls />
-        <Countdown />
       </ImageBackground>
       <FloatButton />
     </View>

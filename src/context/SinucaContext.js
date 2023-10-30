@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 export const SinucaContext = createContext({});
 
@@ -6,6 +6,7 @@ export function SinucaProvider({ children }) {
   const [selectedBall, setSelectedBall] = useState(null);
   const [players, setPlayers] = useState([{ name: "Joao" }, { name: "Maria" }]);
   const [undoHistory, setUndoHistory] = useState([]);
+  const [finishModal, setFinishModal] = useState(false);
 
   function addToUndo(ball) {
     setUndoHistory([...undoHistory, ball]);
@@ -34,6 +35,20 @@ export function SinucaProvider({ children }) {
     );
   }
 
+  useEffect(() => {
+    const balls = players.flatMap((player) => player.balls).length;
+    console.log(balls);
+    if (balls === 15) finish();
+  }, [players]);
+
+  function finish() {
+    const winner = players.reduce((prev, current) => {
+      if (current.balls?.length > prev.balls?.length) return current;
+      return prev;
+    });
+    setFinishModal(winner);
+  }
+
   return (
     <SinucaContext.Provider
       value={{
@@ -44,6 +59,9 @@ export function SinucaProvider({ children }) {
         undo,
         addBallToPlayer,
         resetScore,
+        finishModal,
+        setFinishModal,
+        finish,
       }}
     >
       {children}

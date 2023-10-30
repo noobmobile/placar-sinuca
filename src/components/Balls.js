@@ -3,9 +3,11 @@ import React, { useContext } from "react";
 import { SinucaContext, useSinuca } from "../context/SinucaContext";
 import * as Animatable from "react-native-animatable";
 import { ballsAssets } from "../utils";
+import { useCountdown } from "../context/CountdownContext";
 
 function Ball({ number }) {
   const { selectedBall, setSelectedBall, players } = useSinuca();
+  const { countdownRunning } = useCountdown();
   const isSelected = selectedBall === number;
   const isInsideAnyPlayer = players.some((player) =>
     player.balls?.includes(number)
@@ -24,10 +26,11 @@ function Ball({ number }) {
     <TouchableOpacity
       style={[
         styles.ball,
+        countdownRunning ? undefined : { opacity: 0.2 },
         isSelected ? styles.selectedBall : undefined,
         isInsideAnyPlayer ? styles.insidePlayer : undefined,
       ]}
-      disabled={isInsideAnyPlayer}
+      disabled={isInsideAnyPlayer || !countdownRunning}
       onPress={onPress}
     >
       <Animatable.Image

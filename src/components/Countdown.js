@@ -1,8 +1,9 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
-import { IconButton } from "react-native-paper";
+import { Icon } from "react-native-paper";
 import { useCountdown } from "../context/CountdownContext";
 import * as Animatable from "react-native-animatable";
+import { AnimatedTouchableOpacity } from "../utils";
 
 const Countdown = () => {
   const { toggle, countdownTimeLeft, countdownRunning } = useCountdown();
@@ -15,16 +16,23 @@ const Countdown = () => {
   const seconds = `${countdownTimeLeft % 60}`.padStart(2, "0");
 
   return (
-    <TouchableOpacity style={styles.container} onPress={onPress}>
-      <Animatable.Text
+    <AnimatedTouchableOpacity style={styles.container} onPress={onPress}>
+      <Icon
+        source={
+          countdownRunning ? "pause-circle-outline" : "play-circle-outline"
+        }
+        color="white"
+        size={24}
+      />
+      <Text
         animation={countdownRunning ? "pulse" : undefined}
         easing="ease-out"
         iterationCount="infinite"
         style={styles.text}
       >
         {minutes}:{seconds}
-      </Animatable.Text>
-    </TouchableOpacity>
+      </Text>
+    </AnimatedTouchableOpacity>
   );
 };
 
@@ -34,15 +42,17 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
     alignItems: "center",
+    display: "flex",
+    textAlign: "center",
     marginBottom: 15,
     flexDirection: "row",
-    position: "absolute",
-    top: 65,
     width: "100%",
+    gap: 10,
   },
   text: {
     fontSize: 24,
     fontWeight: "bold",
     color: "white",
+    gap: 10,
   },
 });

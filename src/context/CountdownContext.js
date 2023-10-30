@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { useSinuca } from "./SinucaContext";
 
 export const CountdownContext = createContext({});
 
@@ -8,12 +9,14 @@ export function CountdownProvider({ children }) {
   const [countdownRunning, setCountdownRunning] = useState(false);
   // em segundos
   const [countdownTimeLeft, setCountdownTimeLeft] = useState(60);
+  const { finish } = useSinuca();
 
   useEffect(() => {
     const interval = setInterval(() => {
       if (countdownRunning) {
         setCountdownTimeLeft((countdownTimeLeft) => countdownTimeLeft - 1);
         if (countdownTimeLeft <= 0) {
+          finish();
           stop();
         }
       }

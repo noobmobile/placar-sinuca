@@ -1,11 +1,8 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
 import React from "react";
 import { useSinuca } from "../context/SinucaContext";
-import { ballsAssets } from "../utils";
-import * as Animatable from "react-native-animatable";
-
-const AnimatedTouchableOpacity =
-  Animatable.createAnimatableComponent(TouchableOpacity);
+import { AnimatedTouchableOpacity, ballsAssets } from "../utils";
+import Countdown from "./Countdown";
 
 function PlayerBall({ ball }) {
   return (
@@ -52,6 +49,7 @@ export default function Players() {
   const { players } = useSinuca();
   return (
     <View style={styles.mainContainer}>
+      <Countdown />
       <View style={styles.container}>
         {players.map((player, index) => (
           <Player key={index} player={player} />

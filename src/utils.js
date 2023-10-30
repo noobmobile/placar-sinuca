@@ -1,4 +1,6 @@
 import { createNavigationContainerRef } from "@react-navigation/native";
+import * as Animatable from "react-native-animatable";
+import { TouchableOpacity } from "react-native";
 
 export const navigationRef = createNavigationContainerRef();
 
@@ -26,3 +28,6 @@ export const ballsAssets = {
   14: require("../assets/bolas/14.png"),
   15: require("../assets/bolas/15.png"),
 };
+
+export const AnimatedTouchableOpacity =
+  Animatable.createAnimatableComponent(TouchableOpacity);
