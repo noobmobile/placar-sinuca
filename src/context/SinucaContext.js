@@ -28,6 +28,12 @@ export function SinucaProvider({ children }) {
     setPlayers([...players]);
   }
 
+  function resetScore() {
+    setPlayers((players) =>
+      players.map((player) => ({ ...player, balls: [] }))
+    );
+  }
+
   return (
     <SinucaContext.Provider
       value={{
@@ -37,6 +43,7 @@ export function SinucaProvider({ children }) {
         setPlayers,
         undo,
         addBallToPlayer,
+        resetScore,
       }}
     >
       {children}
