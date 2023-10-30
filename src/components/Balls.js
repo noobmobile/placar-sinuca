@@ -1,8 +1,8 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useContext } from "react";
-import { SinucaContext, useSinuca } from "./SinucaContext";
+import { SinucaContext, useSinuca } from "../context/SinucaContext";
 import * as Animatable from "react-native-animatable";
-import { ballsAssets } from "./utils";
+import { ballsAssets } from "../utils";
 
 function Ball({ number }) {
   const { selectedBall, setSelectedBall, players } = useSinuca();

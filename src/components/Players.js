@@ -1,7 +1,7 @@
 import { StyleSheet, Text, TouchableOpacity, View, Image } from "react-native";
 import React from "react";
-import { useSinuca } from "./SinucaContext";
-import { ballsAssets } from "./utils";
+import { useSinuca } from "../context/SinucaContext";
+import { ballsAssets } from "../utils";
 import * as Animatable from "react-native-animatable";
 
 const AnimatedTouchableOpacity =

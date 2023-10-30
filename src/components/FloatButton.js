@@ -1,17 +1,25 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 import { FloatingAction } from "react-native-floating-action";
-import { useSinuca } from "./SinucaContext";
+import { useSinuca } from "../context/SinucaContext";
+import { navigate } from "../utils";
 
 const FloatButton = () => {
   const { undo } = useSinuca();
   const actions = [
     {
       text: "Restaurar ultima bola",
-      icon: require("../assets/icons/undo-button.png"),
+      icon: require("../../assets/icons/undo-button.png"),
       name: "undo",
-      position: 1,
+      position: 2,
       callback: undo,
+    },
+    {
+      text: "Configurações",
+      icon: require("../../assets/icons/settings.png"),
+      name: "settings",
+      position: 1,
+      callback: () => navigate("Settings"),
     },
   ];
 

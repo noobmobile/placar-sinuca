@@ -1,3 +1,13 @@
+import { createNavigationContainerRef } from "@react-navigation/native";
+
+export const navigationRef = createNavigationContainerRef();
+
+export function navigate(name, params) {
+  if (navigationRef.isReady()) {
+    navigationRef.navigate(name, params);
+  }
+}
+
 // react native não suporta require dinâmico :/
 export const ballsAssets = {
   1: require("../assets/bolas/1.png"),

@@ -1,35 +1,27 @@
-import { StatusBar } from "expo-status-bar";
-import { ImageBackground, StyleSheet, Text, View } from "react-native";
-import Balls from "./src/Balls";
-import Players from "./src/Players";
-import { SinucaProvider } from "./src/SinucaContext";
-import FloatButton from "./src/FloatButton";
+import * as React from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import Home from "./src/screens/Home";
+import { SinucaProvider } from "./src/context/SinucaContext";
+import Settings from "./src/screens/Settings";
+import { navigationRef } from "./src/utils";
+
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <SinucaProvider style={styles.container}>
-      <ImageBackground
-        source={require("./assets/background.jpg")}
-        resizeMode="cover"
-        style={styles.image}
-      >
-        <Players />
-        <Balls />
-      </ImageBackground>
-      <FloatButton />
+    <SinucaProvider>
+      <NavigationContainer ref={navigationRef}>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+            animation: "slide_from_right",
+          }}
+        >
+          <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="Settings" component={Settings} />
+        </Stack.Navigator>
+      </NavigationContainer>
     </SinucaProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-  },
-  image: {
-    width: "100%",
-    height: "100%",
-    alignItems: "center",
-    justifyContent: "space-around",
-    flex: 1,
-  },
-});
