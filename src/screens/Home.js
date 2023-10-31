@@ -3,6 +3,7 @@ import Balls from "../components/Balls";
 import Players from "../components/Players";
 import FloatButton from "../components/FloatButton";
 import FinishModal from "../components/FinishModal";
+import HistoryModal from "../components/HistoryModal";
 
 export default function Home() {
   return (
@@ -17,6 +18,7 @@ export default function Home() {
       </ImageBackground>
       <FloatButton />
       <FinishModal />
+      <HistoryModal />
     </View>
   );
 }

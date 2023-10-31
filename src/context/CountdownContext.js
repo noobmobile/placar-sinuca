@@ -1,4 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+const STORAGE_KEY = "@countdownDuration";
 
 export const CountdownContext = createContext({});
 
@@ -8,6 +11,20 @@ export function CountdownProvider({ children }) {
   const [countdownRunning, setCountdownRunning] = useState(false);
   // em segundos
   const [countdownTimeLeft, setCountdownTimeLeft] = useState(60);
+
+  function saveCountdown() {
+    if (countdownDuration) {
+      AsyncStorage.setItem(STORAGE_KEY, countdownDuration.toString());
+    }
+  }
+
+  useEffect(() => {
+    AsyncStorage.getItem(STORAGE_KEY).then((value) => {
+      if (value) {
+        setCountdownDuration(parseInt(value));
+      }
+    });
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -43,6 +60,7 @@ export function CountdownProvider({ children }) {
         countdownTimeLeft,
         countdownDuration,
         setCountdownDuration,
+        saveCountdown,
       }}
     >
       {children}

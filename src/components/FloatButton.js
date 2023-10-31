@@ -6,7 +6,7 @@ import { navigate } from "../utils";
 import { useCountdown } from "../context/CountdownContext";
 
 const FloatButton = () => {
-  const { undo, resetScore } = useSinuca();
+  const { undo, resetScore, setHistoryModal } = useSinuca();
   const { stop } = useCountdown();
 
   const actions = [
@@ -31,8 +31,15 @@ const FloatButton = () => {
       text: "Configurações",
       icon: require("../../assets/icons/settings.png"),
       name: "settings",
-      position: 1,
+      position: 0,
       callback: () => navigate("Settings"),
+    },
+    {
+      text: "Histórico",
+      icon: require("../../assets/icons/history.png"),
+      name: "history",
+      position: 1,
+      callback: () => setHistoryModal(true),
     },
   ];
 

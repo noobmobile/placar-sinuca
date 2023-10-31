@@ -1,5 +1,8 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useCountdown } from "./CountdownContext";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+const STORAGE_KEY = "@sinuca";
 
 export const SinucaContext = createContext({});
 
@@ -9,9 +12,39 @@ export function SinucaProvider({ children }) {
   const [undoHistory, setUndoHistory] = useState([]);
   const [finishModal, setFinishModal] = useState(false);
   const { stop, countdownRunning, countdownTimeLeft } = useCountdown();
+  const [finishHistory, setFinishHistory] = useState([]);
+  const [historyModal, setHistoryModal] = useState(false);
+
+  function save() {
+    AsyncStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({ finishHistory, players })
+    );
+  }
+
+  useEffect(() => {
+    AsyncStorage.getItem(STORAGE_KEY).then((value) => {
+      try {
+        const { finishHistory, players } = JSON.parse(value);
+        setFinishHistory(finishHistory);
+        setPlayers(players.map((p) => ({ ...p, balls: [] })));
+      } catch (e) {
+        console.log(e);
+      }
+    });
+  }, []);
 
   function addToUndo(ball) {
     setUndoHistory([...undoHistory, ball]);
+  }
+
+  function addFinishHistory(winner) {
+    const history = {
+      ...winner,
+      date: new Date(),
+    };
+    // limit to 5
+    setFinishHistory([history, ...finishHistory.slice(0, 4)]);
   }
 
   function undo() {
@@ -64,6 +97,7 @@ export function SinucaProvider({ children }) {
         return acc;
       });
     stop();
+    addFinishHistory(winner);
     setFinishModal(winner);
     setUndoHistory([]);
   }
@@ -81,6 +115,10 @@ export function SinucaProvider({ children }) {
         finishModal,
         setFinishModal,
         finish,
+        historyModal,
+        setHistoryModal,
+        finishHistory,
+        save,
       }}
     >
       {children}

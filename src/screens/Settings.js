@@ -6,9 +6,10 @@ import { navigate } from "../utils";
 import { useCountdown } from "../context/CountdownContext";
 
 const Settings = () => {
-  const { players, setPlayers } = useSinuca();
+  const { players, setPlayers, save } = useSinuca();
   const [playerAmount, setPlayerAmount] = useState(players.length);
-  const { countdownDuration, setCountdownDuration } = useCountdown();
+  const { countdownDuration, setCountdownDuration, saveCountdown } =
+    useCountdown();
 
   function onChangePlayerAmount(text) {
     let value = parseInt(text);
@@ -46,6 +47,12 @@ const Settings = () => {
     setCountdownDuration(value);
   }
 
+  function back() {
+    navigate("Home");
+    save();
+    saveCountdown();
+  }
+
   return (
     <View style={styles.container}>
       <TextInput
@@ -71,7 +78,7 @@ const Settings = () => {
           onChangeText={(text) => changePlayerName(player, text)}
         />
       ))}
-      <Button mode="contained" onPress={() => navigate("Home")}>
+      <Button mode="contained" onPress={back}>
         Voltar
       </Button>
     </View>

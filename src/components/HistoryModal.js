@@ -4,22 +4,24 @@ import AwesomeAlert from "react-native-awesome-alerts";
 import { useSinuca } from "../context/SinucaContext";
 import { useCountdown } from "../context/CountdownContext";
 
-const FinishModal = () => {
-  const { finishModal, setFinishModal, resetScore, save } = useSinuca();
-  const { stop } = useCountdown();
+const HistoryModal = () => {
+  const { historyModal, setHistoryModal, finishHistory } = useSinuca();
   function dismiss() {
-    setFinishModal(false);
-    resetScore();
-    stop();
-    save();
+    setHistoryModal(false);
   }
-  if (!finishModal) return;
+  const message = finishHistory
+    .map((history, index) => {
+      const date = new Date(history.date);
+      const dateString = date.toLocaleDateString("pt-BR");
+      return `${dateString}: ${history.name} - ${history.balls.length} bolas totalizando ${history.total} pontos.`;
+    })
+    .join("\n");
   return (
     <AwesomeAlert
-      show={!!finishModal}
+      show={!!historyModal}
       showProgress={false}
-      title={`Vitória de ${finishModal?.name}`}
-      message={`${finishModal?.balls?.length} bolas encaçapadas`}
+      title={`Histórico`}
+      message={message}
       closeOnTouchOutside={true}
       closeOnHardwareBackPress={false}
       showConfirmButton={true}
@@ -31,6 +33,6 @@ const FinishModal = () => {
   );
 };
 
-export default FinishModal;
+export default HistoryModal;
 
 const styles = StyleSheet.create({});
