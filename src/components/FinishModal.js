@@ -12,7 +12,6 @@ const FinishModal = () => {
     resetScore();
     stop();
   }
-  console.log("finishModal", finishModal);
   return (
     <AwesomeAlert
       show={!!finishModal}
