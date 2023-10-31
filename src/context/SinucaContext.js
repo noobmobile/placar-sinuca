@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { useCountdown } from "./CountdownContext";
 
 export const SinucaContext = createContext({});
 
@@ -7,6 +8,7 @@ export function SinucaProvider({ children }) {
   const [players, setPlayers] = useState([{ name: "Joao" }, { name: "Maria" }]);
   const [undoHistory, setUndoHistory] = useState([]);
   const [finishModal, setFinishModal] = useState(false);
+  const { stop, countdownRunning, countdownTimeLeft } = useCountdown();
 
   function addToUndo(ball) {
     setUndoHistory([...undoHistory, ball]);
@@ -33,20 +35,37 @@ export function SinucaProvider({ children }) {
     setPlayers((players) =>
       players.map((player) => ({ ...player, balls: [] }))
     );
+    setUndoHistory([]);
   }
 
   useEffect(() => {
-    const balls = players.flatMap((player) => player.balls).length;
-    console.log(balls);
+    if (countdownRunning) {
+      if (countdownTimeLeft <= 0) {
+        finish();
+      }
+    }
+  }, [countdownRunning, countdownTimeLeft]);
+
+  useEffect(() => {
+    const balls = players
+      .flatMap((player) => player.balls)
+      .filter((b) => !!b).length;
     if (balls === 15) finish();
   }, [players]);
 
   function finish() {
-    const winner = players.reduce((prev, current) => {
-      if (current.balls?.length > prev.balls?.length) return current;
-      return prev;
-    });
+    const winner = players
+      .map((p) => ({
+        ...p,
+        total: p.balls?.reduce((acc, ball) => acc + ball, 0) || 0,
+      }))
+      .reduce((acc, player) => {
+        if (player.total > acc.total) return player;
+        return acc;
+      });
+    stop();
     setFinishModal(winner);
+    setUndoHistory([]);
   }
 
   return (

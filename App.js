@@ -11,8 +11,8 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <SinucaProvider>
-      <CountdownProvider>
+    <CountdownProvider>
+      <SinucaProvider>
         <NavigationContainer ref={navigationRef}>
           <Stack.Navigator
             screenOptions={{
@@ -24,7 +24,7 @@ export default function App() {
             <Stack.Screen name="Settings" component={Settings} />
           </Stack.Navigator>
         </NavigationContainer>
-      </CountdownProvider>
-    </SinucaProvider>
+      </SinucaProvider>
+    </CountdownProvider>
   );
 }

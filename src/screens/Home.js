@@ -2,7 +2,7 @@ import { ImageBackground, StyleSheet, Text, View } from "react-native";
 import Balls from "../components/Balls";
 import Players from "../components/Players";
 import FloatButton from "../components/FloatButton";
-import Countdown from "../components/Countdown";
+import FinishModal from "../components/FinishModal";
 
 export default function Home() {
   return (
@@ -16,6 +16,7 @@ export default function Home() {
         <Balls />
       </ImageBackground>
       <FloatButton />
+      <FinishModal />
     </View>
   );
 }
