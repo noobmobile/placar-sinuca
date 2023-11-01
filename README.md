@@ -1,5 +1,9 @@
 # placar-sinuca
 Trabalho programação para dispositivos móveis
+
+https://github.com/noobmobile/placar-sinuca/assets/31212697/0932b9ab-1d99-407f-a293-0f80ee832fee
+
+
 ## Sobre
 O aplicativo foi feito em React Native, com auxílio da plataforma Expo
 ## Como rodar
