@@ -1,6 +1,8 @@
 # placar-sinuca
 Trabalho programação para dispositivos móveis
 
+[Download .apk](https://github.com/noobmobile/placar-sinuca/releases)
+
 https://github.com/noobmobile/placar-sinuca/assets/31212697/0932b9ab-1d99-407f-a293-0f80ee832fee
 
 
