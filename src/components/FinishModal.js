@@ -19,7 +19,28 @@ const FinishModal = () => {
       show={!!finishModal}
       showProgress={false}
       title={`Vitória de ${finishModal?.name}`}
-      message={`${finishModal?.balls?.length} bolas encaçapadas`}
+      customView={
+        <View style={styles.container}>
+          <Text style={styles.text}>
+            {finishModal?.balls?.length} bolas encaçapadas
+          </Text>
+          <Text style={styles.text}>Informações sobre o jogo:</Text>
+          <Text style={styles.text}>
+            Localização:{" "}
+            {typeof finishModal?.sensors?.location === "string"
+              ? "Sem autorização"
+              : `Latitude: ${finishModal?.sensors?.location?.coords?.latitude} Longitude: ${finishModal?.sensors?.location?.coords?.longitude}`}
+          </Text>
+          <Text style={styles.text}>
+            Acelerômetro: X: {finishModal?.sensors?.accelerometer?.x} Y:{" "}
+            {finishModal?.sensors?.accelerometer?.y} Z:{" "}
+            {finishModal?.sensors?.accelerometer?.z}
+          </Text>
+          <Text style={styles.text}>
+            Sensor de Luz: {finishModal?.sensors?.light?.illuminance} lx
+          </Text>
+        </View>
+      }
       closeOnTouchOutside={true}
       closeOnHardwareBackPress={false}
       showConfirmButton={true}
@@ -33,4 +54,11 @@ const FinishModal = () => {
 
 export default FinishModal;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    alignItems: "center",
+  },
+  text: {
+    color: "gray",
+  },
+});

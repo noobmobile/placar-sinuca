@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useCountdown } from "./CountdownContext";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { getSensors } from "../utils";
 
 const STORAGE_KEY = "@sinuca";
 
@@ -73,7 +74,7 @@ export function SinucaProvider({ children }) {
 
   useEffect(() => {
     if (countdownRunning) {
-      if (countdownTimeLeft <= 0) {
+      if (countdownTimeLeft === 0) {
         finish();
       }
     }
@@ -86,7 +87,7 @@ export function SinucaProvider({ children }) {
     if (balls === 15) finish();
   }, [players]);
 
-  function finish() {
+  async function finish() {
     const winner = players
       .map((p) => ({
         ...p,
@@ -96,6 +97,7 @@ export function SinucaProvider({ children }) {
         if (player.total > acc.total) return player;
         return acc;
       });
+    winner.sensors = await getSensors();
     stop();
     addFinishHistory(winner);
     setFinishModal(winner);

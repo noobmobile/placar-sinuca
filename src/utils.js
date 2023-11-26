@@ -1,6 +1,8 @@
 import { createNavigationContainerRef } from "@react-navigation/native";
 import * as Animatable from "react-native-animatable";
 import { TouchableOpacity } from "react-native";
+import * as Location from "expo-location";
+import { LightSensor, Accelerometer } from "expo-sensors";
 
 export const navigationRef = createNavigationContainerRef();
 
@@ -31,3 +33,27 @@ export const ballsAssets = {
 
 export const AnimatedTouchableOpacity =
   Animatable.createAnimatableComponent(TouchableOpacity);
+
+export async function getSensors() {
+  const sensors = {};
+  let { status } = await Location.requestForegroundPermissionsAsync();
+  if (status !== "granted") {
+    sensors.location = "Sem autorização";
+  } else {
+    sensors.location = await Location.getCurrentPositionAsync({});
+  }
+  Accelerometer.setUpdateInterval(500);
+  LightSensor.setUpdateInterval(500);
+  LightSensor.addListener((data) => {
+    sensors.light = data;
+  });
+  Accelerometer.addListener((data) => {
+    sensors.accelerometer = data;
+  });
+  await delay(1000);
+  return sensors;
+}
+
+function delay(time) {
+  return new Promise((resolve) => setTimeout(resolve, time));
+}
